@@ -1,0 +1,19 @@
+{
+  "name": "mintbean-puzzle-game",
+  "version": "1.0.0",
+  "description": "This project is part of a hackerthon organised by [Mintbean](https://www.mintbean.io/).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jam52/mintbean-puzzle-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jam52/mintbean-puzzle-game/issues"
+  },
+  "homepage": "https://github.com/Jam52/mintbean-puzzle-game#readme"
+}
