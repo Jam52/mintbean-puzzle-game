@@ -1,3 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@500&family=Raleway:wght@300&display=swap');
+
+:root {
+    --primary-color:  rgb(73, 196, 159);
+    --secondary-color:  rgb(184, 151, 109);
+  }
+
+
 body {
-    background-color: blue;
+    color: white;
+    background-color: black;
+}
+
+/* typography */
+h1,h2,h3,h4,h5 {
+    font-family: 'Kiwi Maru', serif;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+h2 {
+    margin-top: 4rem;
+}
+
+p, ul, a {
+    font-family: 'Raleway', sans-serif;
+    line-height: 1.6;
+    letter-spacing: 0.1rem;
+    max-width: 70ch;
+    margin: auto;
+}
+a {
+    color:var(--secondary-color);
+ }
+
+
+/* Utility Classes */
+.container {
+    max-width: 1200px;
+    width: 90vw;
+    margin: auto;
+}
+.split {
+    display: flex;
+    flex-direction: column;
+}
+
+.split > * + * {
+    margin: 3rem 0 0 0;
+}
+
+.flow-vert > *+* {
+    margin-top: 1rem;
+}
+
+/* Component Classes */
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.logo {
+    display: block;
+    width: 90%;
+    max-width: 40rem;
+    margin: 2rem auto;
+}
+
+.logo--small {
+    max-width: 20rem;
+}
+
+
+.team-member {
+    background: rgb(240, 240, 240);
+    color: black;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 3rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.team-member h3 {
+    color: black;
+}
+
+.team-member img {
+    border-radius: 50%;
+    width: 80%;
+    max-width: 15rem;
+    box-shadow: 6px 6px 10px rgba(0,0,0,0.3);
+}
+
+.team-member a {
+    margin-top: 0.5rem;
+    font-weight: bold;
+}
+
+.button {
+    display: block;
+    background-color: var(--secondary-color);
+    color: black;
+    border-radius: 10000px;
+    text-decoration: none;
+    padding: 1em 3em;
+    font-family: 'Kiwi Maru', serif;
+    font-weight: bold;
+    margin: 2rem auto;
+    text-align: center;
+    max-width: 8rem;
+    transition: 0.2s all;
+}
+
+.button:hover {
+    background-color: white;
+    transform: scale(1.1);
+}
+
+
+.instructions {
+    list-style: none;
+    padding: 0;
+}
+
+.instructions li {
+    padding-bottom: 0.5rem;
+}
+
+.instructions_tile {
+    height: 2rem;
+}
+
+#game {
+    width: 100%;
+    max-width: 1000px;
+    margin: 3rem auto;
+
+}
+
+#game canvas {
+    width: 100%;
+}
+
+
+@media (min-width: 600px) {
+    .team-member {
+        width: auto;
+    }
+    .split {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .split > * + * {
+        margin: 0 0 0 2rem;
+    }
 }

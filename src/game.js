@@ -7,6 +7,7 @@ let config = {
   height: 360,
   parent: 'game',
   scene: [MainScene],
+  disableContextMenu: true,
   autoCenter: Phaser.Scale.CENTER_BOTH,
 };
 
@@ -16,3 +17,11 @@ let game = new Phaser.Game(config);
 game.canvas.oncontextmenu = function (e) {
   e.preventDefault();
 };
+
+window.addEventListener(
+  'contextmenu',
+  function (e) {
+    e.preventDefault();
+  },
+  false,
+);

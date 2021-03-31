@@ -6,6 +6,44 @@
   <title>Mintbean Puzzle Game</title>
 </head>
 <body style="margin: 0; padding: 0;">
-  <a href="/game">Go To Game</a>
+  <header class="header">
+    <img class="logo" src='./assets/mine_digger_logo.png' alt="mine digger"/>
+    <a class="button" href="/game">Play Now!</a>
+  </header>
+  <main>
+    <div class="container">
+      <h2>The project</h2>
+      <p>This project was a Hackathon organised by <a href="https://mintbean.io/">Mintbean.io</a>, 
+        a collective dedicated to helping people improve their coding skills.</p>
+      <p>The project was a one week project to build a turn based puzzle game using Phaser.js.</p>
+
+      <h2>Our Team</h2>
+      <div class="split">
+        <article class="team-member">
+          <img src="./assets/jamie.jpg" alt="Jamie Sajdak"/>
+          <h3>Jamie Sajdak</h3>
+            <a href="https://www.jamiesajdak.com/">Portfolio</a>
+            <a href="https://github.com/Jam52">GitHub</a>
+            <a href="https://www.linkedin.com/in/jamie-sajdak-07559237/">LinkedIn</a>
+        </article>
+        <article class="team-member flow-vert">
+          <img src="./assets/blank-profile-picture.png" alt="Sammar Abbas"/>
+          <h3>Sammar Abbas</h3>
+            <a href="https://sammar-abbas.herokuapp.com/">Portfolio</a>
+            <a href="https://github.com/8sagh8/">GitHub</a>
+        </article>
+      </div>
+      <h2>The Game</h2>
+      <p>The concept for this game was to build a minesweeper varient where you dig through the level, trying to avoid the mines to reach the next level.</p>
+      <h3>Instructions</h3>
+      <ul class="instructions flow-vert">
+        <il>Starting at starting <img class="instructions_tile" src="./assets/Puzzle_Start.jpg"/> dig your way to ending <img class="instructions_tile" src="./assets/Puzzle_End.jpg"/> without discovering any bomb to reach the next level.</il>
+        <li>Select a <img class="instructions_tile" src="./assets/Puzzle_Hidden_clickable.jpg"/>  to explore.</li>
+        <li>A space with Numbers <img class="instructions_tile" src="./assets/Puzzle_Num_1.png"/>  gives you a hint to how many bombs are surrounding it.</li>
+        <li>You begin with 5 lives <img class="instructions_tile" src="./assets/Puzzle_Heart_Begin.png"/>  and lose a life if you find a bomb.</li>
+      </ul>
+      <a class="button" href="/game">Play Now!</a>
+    </div>
+  </main>
 </body>
 </html>
