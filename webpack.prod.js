@@ -12,13 +12,9 @@ module.exports = merge(common, {
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '',
   },
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-    },
-    minimizer: [new OptimizeCssAssetsPlugin(), new TerserWebpackPlugin()],
-  },
+  stats: { children: true },
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
