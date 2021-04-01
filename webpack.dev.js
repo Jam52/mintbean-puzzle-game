@@ -10,7 +10,10 @@ module.exports = merge(common, {
     contentBase: './dist',
   },
   output: {
-    publicPath: './',
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'dist'),
+    assetModuleFilename: 'images/[hash][ext][query]',
+    publicPath: '',
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -28,7 +31,7 @@ module.exports = merge(common, {
       title: 'game',
       template: './src/game.html',
       output: {
-        publicPath: './',
+        publicPath: './game',
       },
     }),
   ],
@@ -39,6 +42,14 @@ module.exports = merge(common, {
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       { test: /\.css/, use: ['style-loader', 'css-loader'] },
+      {
+        test: /\.html$/i,
+        use: [
+          {
+            loader: 'html-loader',
+          },
+        ],
+      },
     ],
   },
   output: {

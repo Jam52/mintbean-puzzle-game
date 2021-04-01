@@ -12,7 +12,7 @@ module.exports = merge(common, {
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '',
+    assetModuleFilename: 'images/[hash][ext][query]',
   },
   stats: { children: true },
   plugins: [
@@ -48,6 +48,7 @@ module.exports = merge(common, {
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       { test: /\.css/, use: [MiniCssExtractPlugin.loader, 'css-loader'] },
+      { test: /\.html/, use: ['html-loader'] },
     ],
   },
 });
