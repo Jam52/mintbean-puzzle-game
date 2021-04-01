@@ -242,7 +242,7 @@ export default class MainScene extends Phaser.Scene {
     };
 
     //function to set surrounding tiles to clickable
-    const setSurroundingTilesToClickable = (tileData) => {
+    const setSurroundingTilesToClickable = (tileData, initialTiles = []) => {
       const surroundTileCoordinates = this.surroundingTilesCoordinatesArray(
         tileData,
       );
@@ -257,11 +257,7 @@ export default class MainScene extends Phaser.Scene {
         );
         if (isTileInCoordinatesArray) {
           tile.setTileClickable();
-          const initialTiles = [
-            [1, 0],
-            [0, 1],
-            [1, 1],
-          ];
+
           const isInitialTile = initialTiles.some((coordinates) => {
             return (
               tile.xIndex === coordinates[0] && tile.yIndex === coordinates[1]
@@ -370,7 +366,11 @@ export default class MainScene extends Phaser.Scene {
       }
 
       //set tiles surrounding start tile to clickable
-      setSurroundingTilesToClickable(this.gameData[0][0]);
+      setSurroundingTilesToClickable(this.gameData[0][0], [
+        [1, 0],
+        [0, 1],
+        [1, 1],
+      ]);
     };
 
     startGame();
