@@ -82,8 +82,9 @@ export default class Tile extends Phaser.GameObjects.Container {
         this.isClicked = true;
         this.setSurroundingTilesToClickable(this.tileData);
       }
-      if (this.baseImage === 'bomb') {
+      if (this.baseImage === 'bomb' && this.isTileClickable) {
         const lives = this.getLives();
+        this.isTileClickable = false;
         if (lives === 1) {
           this.loseLevel(this.scene);
         }
