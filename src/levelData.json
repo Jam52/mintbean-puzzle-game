@@ -1,0 +1,52 @@
+{
+  "1": {
+    "numOfRows": 8,
+    "numOfCols": 12,
+    "numOfMines": 15
+  },
+  "2": {
+    "numOfRows": 8,
+    "numOfCols": 13,
+    "numOfMines": 20
+  },
+  "3": {
+    "numOfRows": 9,
+    "numOfCols": 14,
+    "numOfMines": 25
+  },
+  "4": {
+    "numOfRows": 9,
+    "numOfCols": 14,
+    "numOfMines": 30
+  },
+  "5": {
+    "numOfRows": 10,
+    "numOfCols": 15,
+    "numOfMines": 35
+  },
+  "6": {
+    "numOfRows": 10,
+    "numOfCols": 15,
+    "numOfMines": 40
+  },
+  "7": {
+    "numOfRows": 10,
+    "numOfCols": 15,
+    "numOfMines": 45
+  },
+  "8": {
+    "numOfRows": 11,
+    "numOfCols": 16,
+    "numOfMines": 50
+  },
+  "9": {
+    "numOfRows": 11,
+    "numOfCols": 16,
+    "numOfMines": 55
+  },
+  "10": {
+    "numOfRows": 12,
+    "numOfCols": 17,
+    "numOfMines": 65
+  }
+}

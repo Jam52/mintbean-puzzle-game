@@ -1,5 +1,5 @@
-const Phaser = require('phaser');
 import Tile from './Tile.js';
+import levelData from './levelData.json';
 
 // Create a MainScene, preload all images, set background
 export default class MainScene extends Phaser.Scene {
@@ -25,12 +25,12 @@ export default class MainScene extends Phaser.Scene {
     this.numOfMines = newNumOfMines;
   };
 
-  upCurrentLevelByOne = () => {
-    this.currentLevel += 1;
-  };
-
   getLives = () => {
     return this.lives;
+  };
+
+  upCurrentLevelByOne = () => {
+    this.currentLevel += 1;
   };
 
   /* ---- InizializeGameData Method ---- 
@@ -41,6 +41,7 @@ export default class MainScene extends Phaser.Scene {
   */
 
   initilizeGameData = () => {
+    const { numOfCols, numOfRows, numOfMines } = levelData[this.currentLevel];
     this.gameData = {};
     console.log('initilizing');
     //specifiy index's where bombs cannot be placed
@@ -48,15 +49,15 @@ export default class MainScene extends Phaser.Scene {
       [0, 1],
       [1, 0],
       [1, 1],
-      [10, 6],
-      [10, 7],
-      [11, 6],
+      [numOfCols - 2, numOfRows - 2],
+      [numOfCols - 2, numOfRows - 1],
+      [numOfCols - 1, numOfRows - 2],
     ];
 
     //build gameData object
-    for (let x = 0; x < 12; x++) {
+    for (let x = 0; x < numOfCols; x++) {
       let yIndexArray = [];
-      for (let y = 0; y < 8; y++) {
+      for (let y = 0; y < numOfRows; y++) {
         if (x === 0 && y === 0) {
           yIndexArray.push({
             xIndex: x,
@@ -64,7 +65,7 @@ export default class MainScene extends Phaser.Scene {
             baseImage: 'startTile',
             number: 0,
           });
-        } else if (x === 11 && y === 7) {
+        } else if (x === numOfCols - 1 && y === numOfRows - 1) {
           yIndexArray.push({
             xIndex: x,
             yIndex: y,
@@ -82,7 +83,8 @@ export default class MainScene extends Phaser.Scene {
           });
         } else {
           //bombs are randomised using a % chance based on numOfMines / num of overall tiles
-          const isBomb = Math.random() < (15 + this.currentLevel * 3) / 88;
+          const isBomb =
+            Math.random() < numOfMines / (numOfRows * numOfCols - 6);
           let baseImage = 'emptyTile';
           if (isBomb) {
             baseImage = 'bomb';
@@ -118,30 +120,33 @@ export default class MainScene extends Phaser.Scene {
 
   //method to return coodinates (x,y) of all surrdounding tiles if they exists
   surroundingTilesCoordinatesArray = (tileData) => {
+    const { numOfCols, numOfRows } = levelData[this.currentLevel];
+    const colIndex = numOfCols - 1;
+    const rowIndex = numOfRows - 1;
     let surroundingTileArray = [];
     const { xIndex, yIndex } = tileData;
     if (xIndex > 0) {
       surroundingTileArray.push([xIndex - 1, yIndex]);
     }
-    if (xIndex < 11) {
+    if (xIndex < colIndex) {
       surroundingTileArray.push([xIndex + 1, yIndex]);
     }
     if (yIndex > 0) {
       surroundingTileArray.push([xIndex, yIndex - 1]);
     }
-    if (yIndex < 7) {
+    if (yIndex < rowIndex) {
       surroundingTileArray.push([xIndex, yIndex + 1]);
     }
     if (xIndex > 0 && yIndex > 0) {
       surroundingTileArray.push([xIndex - 1, yIndex - 1]);
     }
-    if (xIndex > 0 && yIndex < 7) {
+    if (xIndex > 0 && yIndex < rowIndex) {
       surroundingTileArray.push([xIndex - 1, yIndex + 1]);
     }
-    if (xIndex < 11 && yIndex > 0) {
+    if (xIndex < colIndex && yIndex > 0) {
       surroundingTileArray.push([xIndex + 1, yIndex - 1]);
     }
-    if (xIndex < 11 && yIndex < 7) {
+    if (xIndex < colIndex && yIndex < rowIndex) {
       surroundingTileArray.push([xIndex + 1, yIndex + 1]);
     }
     return surroundingTileArray;
@@ -167,8 +172,8 @@ export default class MainScene extends Phaser.Scene {
   create() {
     const sceneWidth = this.sys.game.config.width;
     const sceneHeight = this.sys.game.config.height;
-    let tileSize = 38;
-    let startingX = (sceneWidth - tileSize * 12 + tileSize) / 2;
+    let tileSize;
+    let startingX;
     let startingY = 60;
     let tiles = [];
 
@@ -178,8 +183,12 @@ export default class MainScene extends Phaser.Scene {
     background.displayWidth = sceneWidth;
 
     // Set level text
-    let level = this.add.text(sceneWidth - startingX + 18, 10, 'level: 1', {
+    let level = this.add.text(sceneWidth - 20, 10, 'level: 1', {
       fontSize: '20px',
+    });
+    let gameNameText = this.add.text(20, 10, 'MineDigger', {
+      fontSize: '20px',
+      fontStyle: 'bold',
     });
 
     //set heart image
@@ -233,7 +242,7 @@ export default class MainScene extends Phaser.Scene {
     };
 
     //function to set surrounding tiles to clickable
-    const setSurroundingTilesToClickable = (tileData) => {
+    const setSurroundingTilesToClickable = (tileData, initialTiles = []) => {
       const surroundTileCoordinates = this.surroundingTilesCoordinatesArray(
         tileData,
       );
@@ -248,11 +257,7 @@ export default class MainScene extends Phaser.Scene {
         );
         if (isTileInCoordinatesArray) {
           tile.setTileClickable();
-          const initialTiles = [
-            [1, 0],
-            [0, 1],
-            [1, 1],
-          ];
+
           const isInitialTile = initialTiles.some((coordinates) => {
             return (
               tile.xIndex === coordinates[0] && tile.yIndex === coordinates[1]
@@ -289,27 +294,21 @@ export default class MainScene extends Phaser.Scene {
       });
     };
 
-    let tileObjectData = {
-      hidden: 'hiddenTile',
-      tileSize: tileSize,
-      loseLevel,
-      winLevel,
-      getIsGamePlaying: this.getIsGamePlaying,
-      setTileClickable: this.setTileClickable,
-      getLives: this.getLives,
-      setLives,
-      setSurroundingTilesToClickable,
-    };
-
     // initialize the gameData and populate the gameboard with tiles
     const startGame = () => {
       console.log(`Current Level: ${this.currentLevel}`);
       this.initilizeGameData();
 
+      tileSize = (sceneWidth - 180) / levelData[this.currentLevel].numOfCols;
+
+      startingX =
+        (sceneWidth -
+          tileSize * levelData[this.currentLevel].numOfCols +
+          tileSize) /
+        2;
+
       //set current level text
-      level.setText(
-        `The Path Finder               Level: ${this.currentLevel}`,
-      );
+      level.setText(`Level: ${this.currentLevel}`);
       level.displayOriginX = level.displayWidth;
 
       //set current lives text
@@ -317,10 +316,30 @@ export default class MainScene extends Phaser.Scene {
 
       this.setIsGamePlaying(true);
 
+      let tileObjectData = {
+        hidden: 'hiddenTile',
+        tileSize,
+        loseLevel,
+        winLevel,
+        getIsGamePlaying: this.getIsGamePlaying,
+        setTileClickable: this.setTileClickable,
+        getLives: this.getLives,
+        setLives,
+        setSurroundingTilesToClickable,
+      };
+
       // add Tiles based on gameData
-      for (let Xindex = 0; Xindex < 12; Xindex++) {
+      for (
+        let Xindex = 0;
+        Xindex < levelData[this.currentLevel].numOfCols;
+        Xindex++
+      ) {
         const x = startingX + tileSize * Xindex;
-        for (let Yindex = 0; Yindex < 8; Yindex++) {
+        for (
+          let Yindex = 0;
+          Yindex < levelData[this.currentLevel].numOfRows;
+          Yindex++
+        ) {
           const y = startingY + Yindex * tileSize;
 
           const newTile = new Tile(
@@ -347,7 +366,11 @@ export default class MainScene extends Phaser.Scene {
       }
 
       //set tiles surrounding start tile to clickable
-      setSurroundingTilesToClickable(this.gameData[0][0]);
+      setSurroundingTilesToClickable(this.gameData[0][0], [
+        [1, 0],
+        [0, 1],
+        [1, 1],
+      ]);
     };
 
     startGame();

@@ -77,7 +77,7 @@ export default class Tile extends Phaser.GameObjects.Container {
 
   clickTile = () => {
     if (this.getIsGamePlaying()) {
-      if (this.isTileClickable) {
+      if (this.isTileClickable && !this.isFlagTile) {
         this.topImage.setVisible(false);
         this.isClicked = true;
         this.setSurroundingTilesToClickable(this.tileData);
@@ -101,14 +101,14 @@ export default class Tile extends Phaser.GameObjects.Container {
 
   toggleFlagTile = () => {
     console.log('toggle');
-    if (!this.isFlagTile) {
-      this.topImage.setTexture('flagTile');
-      this.isTileClickable = false;
-      this.isFlagTile = true;
-    } else {
-      this.isFlagTile = false;
-      this.isTileClickable = true;
-      this.topImage.setTexture('hiddenTileClickable');
+    if (this.isTileClickable) {
+      if (!this.isFlagTile) {
+        this.topImage.setTexture('flagTile');
+        this.isFlagTile = true;
+      } else {
+        this.isFlagTile = false;
+        this.topImage.setTexture('hiddenTileClickable');
+      }
     }
   };
 }

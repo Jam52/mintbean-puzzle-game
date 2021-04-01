@@ -3,10 +3,9 @@ module.exports = {
   entry: { index: './src/index.js', game: './src/game.js' },
   module: {
     rules: [
-      { test: /\.html/, use: ['html-loader'] },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset',
+        type: 'asset/resource',
       },
       {
         test: /\.m?js$/,
