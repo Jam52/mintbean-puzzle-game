@@ -13,15 +13,3 @@ let config = {
 
 // create a new game, pass the configuration
 let game = new Phaser.Game(config);
-
-game.canvas.oncontextmenu = function (e) {
-  e.preventDefault();
-};
-
-window.addEventListener(
-  'contextmenu',
-  function (e) {
-    e.preventDefault();
-  },
-  false,
-);
